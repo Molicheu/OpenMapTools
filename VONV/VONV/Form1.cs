@@ -42,8 +42,6 @@ namespace VONV
             }
         }
 
-
-
         private void ProcessButton_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(InputFolderTextBox.Text))
@@ -139,36 +137,39 @@ namespace VONV
                     var f2 = poly.Flags2;
                     var f3 = poly.Flags3;
 
-                    //## FLAGS TODO
                     if ((f1 & 1) > 0) ypoly.B00_AvoidUnk = true;
                     if ((f1 & 2) > 0) ypoly.B01_AvoidUnk = true;
                     if ((f1 & 4) > 0) ypoly.B02_IsFootpath = true;
                     if ((f1 & 8) > 0) ypoly.B03_IsUnderground = true;
-                    //if ((f1 & 16) > 0) ypoly.B04_Unused = true;
-                    //if ((f1 & 32) > 0) ypoly.B05_Unused = true;
+                    if ((f1 & 16) > 0) ypoly.B04_Unused = true;
+                    if ((f1 & 32) > 0) ypoly.B05_Unused = true;
                     if ((f1 & 64) > 0) ypoly.B06_SteepSlope = true;
                     if ((f1 & 128) > 0) ypoly.B07_IsWater = true;
-
-                    if (ypoly.B02_IsFootpath)
-                    {
-                        ypoly.B00_AvoidUnk = false;
-                        //ypoly.B01_AvoidUnk = false;
-                        ////ypoly.B01_AvoidUnk = true;
-                        //ypoly.B02_IsFootpath = true;
-                        ypoly.B17_IsFlatGround = true;
-                        ypoly.B22_FootpathUnk1 = true;
-                        //ypoly.B23_FootpathUnk2 = true;
-                        //ypoly.B24_FootpathMall = true;
-                    }
-
-
-                    if ((f1 & 16) > 0)
-                    { }//no hits
-                    if ((f1 & 32) > 0)
-                    { }//some hits
-                    if (f1 > 255)
-                    { }//no hits
-
+                    if ((f2 & 1) > 0) ypoly.B08_UndergroundUnk0 = true; 
+                    if ((f2 & 2) > 0) ypoly.B09_UndergroundUnk1 = true; 
+                    if ((f2 & 4) > 0) ypoly.B10_UndergroundUnk2 = true; 
+                    if ((f2 & 8) > 0) ypoly.B11_UndergroundUnk3 = true; 
+                    if ((f2 & 16) > 0) ypoly.B12_Unused = true; 
+                    if ((f2 & 32) > 0) ypoly.B13_HasPathNode = true; 
+                    if ((f2 & 64) > 0) ypoly.B14_IsInterior = true;
+                    if ((f2 & 128) > 0) ypoly.B15_InteractionUnk = true;
+                    if ((f2 & 256) > 0) ypoly.B16_Unused = true; 
+                    if ((f2 & 512) > 0) ypoly.B17_IsFlatGround = true;
+                    if ((f2 & 1024) > 0) ypoly.B18_IsRoad = true;
+                    if ((f2 & 2048) > 0) ypoly.B19_IsCellEdge = true;
+                    if ((f2 & 4096) > 0) ypoly.B20_IsTrainTrack = true;
+                    if ((f2 & 8192) > 0) ypoly.B21_IsShallowWater = true;
+                    if ((f2 & 16384) > 0) ypoly.B22_FootpathUnk1 = true;
+                    if ((f2 & 32768) > 0) ypoly.B23_FootpathUnk2 = true;
+                    if ((f2 & 65536) > 0) ypoly.B24_FootpathMall = true;
+                    if ((f3 & 65536) > 0) ypoly.B25_SlopeSouth = true; 
+                    if ((f3 & 131072) > 0) ypoly.B26_SlopeSouthEast = true;
+                    if ((f3 & 262144) > 0) ypoly.B27_SlopeEast = true;
+                    if ((f3 & 524288) > 0) ypoly.B28_SlopeNorthEast = true;
+                    if ((f3 & 1048576) > 0) ypoly.B29_SlopeNorth = true;
+                    if ((f3 & 2097152) > 0) ypoly.B30_SlopeNorthWest = true;
+                    if ((f3 & 4194304) > 0) ypoly.B31_SlopeWest = true;
+                    if ((f3 & 8388608) > 0) ypoly.B32_SlopeSouthWest = true;
 
                     ypoly.UnkX = 127;
                     ypoly.UnkY = 127;
@@ -217,7 +218,6 @@ namespace VONV
                         
                     }
                     ypoly.Edges = newedges;
-
                 }
             }
 
@@ -250,9 +250,7 @@ namespace VONV
                 File.WriteAllBytes(filename, data);
             }
 
-
             Cursor = Cursors.Default;
-
 
             if (errorlog.Length > 0)
             {
@@ -264,11 +262,7 @@ namespace VONV
                 MessageBox.Show("Process complete.");
             }
         }
-
-
     }
-
-
 
     public class OnvFile
     {
@@ -283,8 +277,6 @@ namespace VONV
         public int PolysCount { get; set; }
         public int PortalsCount { get; set; }
         public int SectorID { get; set; }
-
-
         public List<NavMeshVertex> Vertices { get; set; } = new List<NavMeshVertex>();
         public List<int> Indices { get; set; } = new List<int>();
         public List<OnvEdge> Edges { get; set; } = new List<OnvEdge>();
@@ -540,7 +532,6 @@ namespace VONV
 
         }
 
-
         public void InitPolys()
         {
             Vector3 posoffset = SectorTree?.AABBMin ?? Vector3.Zero;
@@ -596,8 +587,6 @@ namespace VONV
 
     }
 
-
-
     public class OnvEdge
     {
         public int SectorID1 { get; set; }
@@ -652,13 +641,11 @@ namespace VONV
             Flags3 = int.Parse(parts[4].Trim(), CultureInfo.InvariantCulture);
         }
 
-
         public void Init(OnvFile onv)
         {
             Onv = onv;
             LoadIndices();
         }
-
 
         public void LoadIndices()
         {
@@ -695,8 +682,6 @@ namespace VONV
                 i++;
             }
         }
-
-
 
         public override string ToString()
         {
@@ -753,7 +738,6 @@ namespace VONV
         }
     }
 
-
     public class OnvSector
     {
         public Vector3 AABBMin { get; set; }
@@ -795,8 +779,6 @@ namespace VONV
             return X.ToString() + ", " + Y.ToString() + ", " + Z.ToString() + ", " + W.ToString();
         }
     }
-
-
 
     public static class Util
     {

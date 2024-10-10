@@ -19,7 +19,6 @@ namespace VOPL
             InitializeComponent();
         }
 
-
         private void ProcessButton_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(InputFolderTextBox.Text))
@@ -66,7 +65,6 @@ namespace VOPL
                 }
             }
 
-
             foreach (var videfile in videfiles) //load interior info files output from VIDE
             {
                 try
@@ -85,7 +83,6 @@ namespace VOPL
                 }
             }
 
-
             foreach (var oplfile in oplfiles) //load opl files...
             {
                 try
@@ -100,7 +97,6 @@ namespace VOPL
                     errorlog.AppendLine(err);
                 }
             }
-
 
             foreach (var mf in mapdict.Values) //create map file hierarchy
             {
@@ -252,7 +248,7 @@ namespace VOPL
                     cg.PosX += offsetx; //offset cargen positions
                     cg.PosY += offsety;
                     cg.PosZ += offsetz;
-                    cg.Flags = cargenflags;
+                    cg.Flags = cg.Flags;
                 }
             }
 
@@ -306,9 +302,6 @@ namespace VOPL
                 }
             }
 
-
-
-
             if (errorlog.Length > 0)
             {
                 File.WriteAllText(outputpath + "errorlog.txt", errorlog.ToString());
@@ -318,10 +311,7 @@ namespace VOPL
             {
                 MessageBox.Show("Process complete.");
             }
-
         }
-
-
 
         private void InputFolderBrowseButton_Click(object sender, EventArgs e)
         {
@@ -342,12 +332,7 @@ namespace VOPL
                 OutputFolderTextBox.Text = BrowseFolderDialog.SelectedPath;
             }
         }
-
-
     }
-
-
-
 
     public class MapFile
     {
@@ -355,7 +340,6 @@ namespace VOPL
         public string ParentName { get; set; } = string.Empty;
         public int Flags { get; set; } = 0;
         public int ContentFlags { get; set; } = 0;
-
 
         public MapFile Parent { get; set; } = null;
         public List<MapFile> Children { get; set; } = new List<MapFile>();
@@ -430,7 +414,6 @@ namespace VOPL
 
         }
 
-
         public void Load(string oplfile)
         {
             Name = Path.GetFileNameWithoutExtension(oplfile).ToLowerInvariant();
@@ -464,10 +447,7 @@ namespace VOPL
                 }
             }
 
-            //ProcessEntities();
         }
-
-
 
         public void ProcessEntities()
         {
@@ -479,7 +459,7 @@ namespace VOPL
                 {
                     SlodEntities.Add(ent);
                 }
-                else if (depth == 1)
+                else if (depth == 1 || ent.Name.Contains("lod"))
                 {
                     LodEntities.Add(ent);
                 }
@@ -502,32 +482,7 @@ namespace VOPL
                 {
                     SlodEntities.Add(ent);//not really correct here, but what else to do? slod2/3?
                 }
-
-
-
-
-
-                //if (ent.Name.StartsWith("slod"))
-                //{
-                //    SlodEntities.Add(ent);
-                //}
-                //else if (ent.Name.StartsWith("lod"))
-                //{
-                //    LodEntities.Add(ent);
-                //}
-                //else
-                //{
-                //    if (ent.ParentIndex < 0)
-                //    {
-                //        OEntities.Add(ent);
-                //    }
-                //    else
-                //    {
-                //        HdEntities.Add(ent);
-                //    }
-                //}
             }
-
 
             AllLodEntities.Clear();
             AllLodEntities.AddRange(SlodEntities);
@@ -548,8 +503,6 @@ namespace VOPL
             }
         }
 
-
-
         public void Save(string outputpath)
         {
 
@@ -563,14 +516,6 @@ namespace VOPL
                 filename = outputpath + Name + ".ymap.xml";
                 idx++;
             }
-
-            //if (File.Exists(filename))
-            //{
-            //    if (MessageBox.Show("The file " + filename + " already exists. Do you want to overwrite it?", "Confirm file overwrite", MessageBoxButtons.YesNo) != DialogResult.Yes)
-            //    {
-            //        return; //skip this one...
-            //    }
-            //}
 
             StringBuilder sb = new StringBuilder();
             List<string> physDicts = new List<string>();
@@ -665,11 +610,6 @@ namespace VOPL
                     sb.AppendLine("   <orientX value=\"" + FStr(cg.RotX) + "\"/>");
                     sb.AppendLine("   <orientY value=\"" + FStr(cg.RotY) + "\"/>");
                     sb.AppendLine("   <perpendicularLength value=\"" + FStr(cg.Length) + "\"/>");
-                    //if (!string.IsNullOrEmpty(cg.ModelName))
-                    //{
-                    //    sb.AppendLine("   <carModel>" + cg.ModelName + "</carModel>"); //need to do translation!
-                    //}
-                    //else
                     {
                         sb.AppendLine("   <carModel/>");
                     }
@@ -716,9 +656,6 @@ namespace VOPL
 
             File.WriteAllText(filename, sb.ToString());
         }
-
-
-
 
         public string FStr(float f)
         {
@@ -796,7 +733,6 @@ namespace VOPL
             }
         }
 
-
         public override string ToString()
         {
             return Name;
@@ -842,15 +778,6 @@ namespace VOPL
             Alarm = int.Parse(parts[12].Trim(), CultureInfo.InvariantCulture);
             Unk2 = int.Parse(parts[13].Trim(), CultureInfo.InvariantCulture);
 
-            //if (model.StartsWith("hash:"))
-            //{
-            //    ModelName = model.Substring(5);
-            //    if (ModelName == "0") ModelName = string.Empty;
-            //}
-            //else
-            //{
-            //    ModelName = model;
-            //}
             if (ModelName.StartsWith("hash:"))
             {
                 string[] hparts = ModelName.Split(':');
@@ -877,10 +804,6 @@ namespace VOPL
             return ModelName + ": " + Flags.ToString() + ": " + Length.ToString();
         }
     }
-
-
-
-
 
     public class VideFile
     {

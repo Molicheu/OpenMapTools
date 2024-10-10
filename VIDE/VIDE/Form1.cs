@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Numerics;
 
 namespace VIDE
 {
@@ -21,9 +22,7 @@ namespace VIDE
             IDEFormatComboBox.SelectedIndex = 0;
         }
 
-
         public static List<string> WarningsList { get; } = new List<string>();
-
 
         private void ProcessButton_Click(object sender, EventArgs e)
         {
@@ -69,7 +68,6 @@ namespace VIDE
                 }
             }
 
-
             foreach (var idefile in idefiles) //load ide files...
             {
                 try
@@ -112,7 +110,7 @@ namespace VIDE
                     foreach (var typ in typfile.Archetypes)
                     {
                         var namel = typ.Name.ToLowerInvariant();
-                        if (namel.StartsWith("lod") || namel.StartsWith("slod"))
+                        if (namel.Contains("lod"))
                         {
                             lodarchs.Add(typ);
                         }
@@ -195,7 +193,6 @@ namespace VIDE
                 }
             }
 
-
             if (WarningsList.Count > 0)
             {
                 File.WriteAllLines(outputpath + "warninglog.txt", WarningsList.ToArray());
@@ -233,7 +230,6 @@ namespace VIDE
         }
     }
 
-
     public class TypeFile
     {
         public string Name { get; set; } = string.Empty;
@@ -246,7 +242,6 @@ namespace VIDE
         public List<TextureDependency> TextureDependencies { get; set; } = new List<TextureDependency>();
 
         public static Random Rnd = new Random();
-
 
         public void Load(string idefile)
         {
@@ -437,7 +432,7 @@ namespace VIDE
         public string TxdName { get; set; }
         public float DrawDistance { get; set; }
         public int Flags { get; set; }
-        public float Unknown1 { get; set; }
+        public int Unknown1 { get; set; }
         public float MinX { get; set; }
         public float MinY { get; set; }
         public float MinZ { get; set; }
@@ -485,7 +480,7 @@ namespace VIDE
             TxdName = TypeFile.FixHashes(parts[1].Trim().ToLowerInvariant());
             DrawDistance = float.Parse(parts[2].Trim(), CultureInfo.InvariantCulture);
             Flags = int.Parse(parts[3].Trim(), CultureInfo.InvariantCulture);
-            Unknown1 = float.Parse(parts[4].Trim(), CultureInfo.InvariantCulture);
+            Unknown1 = int.Parse(parts[4].Trim(), CultureInfo.InvariantCulture);
             MinX = float.Parse(parts[5].Trim(), CultureInfo.InvariantCulture);
             MinY = float.Parse(parts[6].Trim(), CultureInfo.InvariantCulture);
             MinZ = float.Parse(parts[7].Trim(), CultureInfo.InvariantCulture);
@@ -497,6 +492,372 @@ namespace VIDE
             SphereZ = float.Parse(parts[13].Trim(), CultureInfo.InvariantCulture);
             Radius = float.Parse(parts[14].Trim(), CultureInfo.InvariantCulture);
             LODModel = TypeFile.FixHashes(parts[15].Trim().ToLowerInvariant());
+
+            if (Unknown1 == 6)
+            {
+                Unknown1 = 7;
+            }
+
+            if (Unknown1 == 31)
+            {
+                Flags = 536936448;
+                Unknown1 = 0;
+            }
+
+            if (Flags == 0)
+            {
+                Flags = 536870912;
+            }
+
+            if (Flags == 8192)
+            {
+                Flags = 536879104;
+            }
+
+            if (Flags == 12713984)
+            {
+                Flags = 549584896;
+            }
+
+            if (Flags == 131072)
+            {
+                Flags = 537001984;
+            }
+
+            if (Flags == 12713988)
+            {
+                Flags = 549584900;
+            }
+
+            if (Flags == 131104)
+            {
+                Flags = 537002016;
+            }
+
+            if (Flags == 12714116)
+            {
+                Flags = 549584900;
+            }
+
+            if (Flags == 268435456)
+            {
+                Flags = 805306368;
+            }
+
+            if (Flags == 281149440)
+            {
+                Flags = 818020352;
+            }
+
+            if (Flags == 281149440)
+            {
+                Flags = 818020352;
+            }
+
+            if (Flags == 268566532)
+            {
+                Flags = 805437444;
+            }
+
+            if (Flags == 268566528)
+            {
+                Flags = 805437440;
+            }
+
+            if (Flags == 268566560)
+            {
+                Flags = 805437472;
+            }
+
+            if (Flags == 12582912)
+            {
+                Flags = 549453824;
+            }
+
+            if (Flags == 281018368)
+            {
+                Flags = 817889280;
+            }
+
+            if (Flags == 12714016)
+            {
+                Flags = 549584928;
+            }
+
+            if (Flags == 32)
+            {
+                Flags = 536870944;
+            }
+
+            if (Flags == 67239936)
+            {
+                Flags = 604110848;
+            }
+
+            if (Flags == 134348832)
+            {
+                Flags = 671219744;
+            }
+
+            if (Flags == 131076)
+            {
+                Flags = 537001988;
+            }
+
+            if (Flags == 79822848)
+            {
+                Flags = 616693760;
+            }
+
+            if (Flags == 138543104)
+            {
+                Flags = 675414016;
+            }
+
+            if (Flags == 4194304)
+            {
+                Flags = 541065216;
+            }
+
+            if (Flags == 79822852)
+            {
+                Flags = 616693764;
+            }
+
+            if (Flags == 131200)
+            {
+                Flags = 537001984;
+            }
+
+            if (Flags == 16908320)
+            {
+                Flags = 553779232;
+            }
+
+            if (Flags == 16908320)
+            {
+                Flags = 553779232;
+            }
+
+            if (Flags == 2097152)
+            {
+                Flags = 538968064;
+            }
+
+            if (Flags == 139264)
+            {
+                Flags = 537010176;
+            }
+
+            if (Flags == 134356992)
+            {
+                Flags = 671227904;
+            }
+
+            if (Flags == 12722176)
+            {
+                Flags = 549593088;
+            }
+
+            if (Flags == 12722180)
+            {
+                Flags = 549593092;
+            }
+
+            if (Flags == 136445984)
+            {
+                Flags = 673316896;
+            }
+
+            if (Flags == 2228224)
+            {
+                Flags = 539099136;
+            }
+
+            if (Flags == 134348800)
+            {
+                Flags = 671219712;
+            }
+
+            if (Flags == 131108)
+            {
+                Flags = 537002020;
+            }
+
+            if (Flags == 12714112)
+            {
+                Flags = 549584896;
+            }
+
+            if (Flags == 4)
+            {
+                Flags = 536870916;
+            }
+
+            if (Flags == 402784384)
+            {
+                Flags = 939655168;
+            }
+
+            if (Flags == 134357024)
+            {
+                Flags = 671227936;
+            }
+
+            if (Flags == 402784256)
+            {
+                Flags = 939655168;
+            }
+
+            if (Flags == 146931712)
+            {
+                Flags = 683802624;
+            }
+
+            if (Flags == 402653184)
+            {
+                Flags = 939524096;
+            }
+
+            if (Flags == 432144416)
+            {
+                Flags = 969015328;
+            }
+
+            if (Flags == 14811136)
+            {
+                Flags = 551682048;
+            }
+
+            if (Flags == 12714020)
+            {
+                Flags = 549584932;
+            }
+
+            if (Flags == 8192)
+            {
+                Flags = 536879104;
+            }
+
+            if (Flags == 281026560)
+            {
+                Flags = 817897472;
+            }
+
+            if (Flags == 281157664)
+            {
+                Flags = 818028576;
+            }
+
+            if (Flags == 12583072)
+            {
+                Flags = 549453856;
+            }
+
+            if (Flags == 12582944)
+            {
+                Flags = 549453856;
+            }
+
+            if (Flags == 12591104)
+            {
+                Flags = 549462016;
+            }
+
+            if (Flags == 29360128)
+            {
+                Flags = 566231040;
+            }
+
+            if (Flags == 12582916)
+            {
+                Flags = 549453828;
+            }
+
+            if (Flags == 67239940)
+            {
+                Flags = 604110852;
+            }
+
+            if (Flags == 69337088)
+            {
+                Flags = 606208000;
+            }
+
+            if (Flags == 79822980)
+            {
+                Flags = 616693764;
+            }
+
+            if (Flags == 2228356)
+            {
+                Flags = 539099140;
+            }
+
+            if (Flags == 79822976)
+            {
+                Flags = 616693760;
+            }
+
+            if (Flags == 4325376)
+            {
+                Flags = 541196288;
+            }
+
+            if (Flags == 4325408)
+            {
+                Flags = 541196320;
+            }
+
+            if (Flags == 29491232)
+            {
+                Flags = 566362144;
+            }
+
+            if (Flags == 8519680)
+            {
+                Flags = 545390592;
+            }
+
+            if (Flags == 8224)
+            {
+                Flags = 536879136;
+            }
+
+            if (Flags == 8196)
+            {
+                Flags = 536879108;
+            }
+
+            if (Flags == 12591136)
+            {
+                Flags = 549462048;
+            }
+
+            if (Flags == 16777216)
+            {
+                Flags = 553648128;
+            }
+
+            if (Flags == 2228260)
+            {
+                Flags = 539099172;
+            }
+
+            if (Flags == 14811172)
+            {
+                Flags = 551682084;
+            }
+
+            if (Flags == 14680064)
+            {
+                Flags = 551550976;
+            }
+
+            if (Flags == 14680064)
+            {
+                Flags = 551550976;
+            }
         }
 
         public void LoadAnim(string animstr)
@@ -508,7 +869,7 @@ namespace VIDE
             OutClipDictionary = TypeFile.FixHashes(parts[2].Trim().ToLowerInvariant());
             DrawDistance = float.Parse(parts[3].Trim(), CultureInfo.InvariantCulture);
             Flags = int.Parse(parts[4].Trim(), CultureInfo.InvariantCulture);
-            Unknown1 = float.Parse(parts[5].Trim(), CultureInfo.InvariantCulture);
+            Unknown1 = int.Parse(parts[5].Trim(), CultureInfo.InvariantCulture);
             MinX = float.Parse(parts[6].Trim(), CultureInfo.InvariantCulture);
             MinY = float.Parse(parts[7].Trim(), CultureInfo.InvariantCulture);
             MinZ = float.Parse(parts[8].Trim(), CultureInfo.InvariantCulture);
@@ -520,18 +881,38 @@ namespace VIDE
             SphereZ = float.Parse(parts[14].Trim(), CultureInfo.InvariantCulture);
             Radius = float.Parse(parts[15].Trim(), CultureInfo.InvariantCulture);
             LODModel = TypeFile.FixHashes(parts[16].Trim().ToLowerInvariant());
+
+            if (Flags == 512)
+            {
+                Flags = 536871424;
+            }
+
+            if (Flags == 1536)
+            {
+                Flags = 536872448;
+            }
+
+            if (Flags == 1024)
+            {
+                Flags = 536871936;
+            }
+
+            if (Flags == 12583936)
+            {
+                Flags = 549454848;
+            }
         }
 
         public virtual void SaveXML(StringBuilder sb)
         {
             sb.AppendLine("   <lodDist value=\"" + TypeFile.FStr(DrawDistance) + "\"/>");
-            sb.AppendLine("   <flags value=\"" + TypeFile.UStr((uint)OutFlags) + "\"/>");
-            sb.AppendLine("   <specialAttribute value=\"" + TypeFile.IStr(OutSpecialAttribute) + "\"/>");
+            sb.AppendLine("   <flags value=\"" + TypeFile.IStr(Flags) + "\"/>");
+            sb.AppendLine("   <specialAttribute value=\"" + TypeFile.IStr(Unknown1) + "\"/>");
             sb.AppendLine("   <bbMin x=\"" + TypeFile.FStr(MinX) + "\" y=\"" + TypeFile.FStr(MinY) + "\" z=\"" + TypeFile.FStr(MinZ) + "\"/>");
             sb.AppendLine("   <bbMax x=\"" + TypeFile.FStr(MaxX) + "\" y=\"" + TypeFile.FStr(MaxY) + "\" z=\"" + TypeFile.FStr(MaxZ) + "\"/>");
             sb.AppendLine("   <bsCentre x=\"" + TypeFile.FStr(SphereX) + "\" y=\"" + TypeFile.FStr(SphereY) + "\" z=\"" + TypeFile.FStr(SphereZ) + "\"/>");
             sb.AppendLine("   <bsRadius value=\"" + TypeFile.FStr(Radius) + "\"/>");
-            sb.AppendLine("   <hdTextureDist value=\"0\"/>");
+            sb.AppendLine("   <hdTextureDist value=\"60\"/>");
             sb.AppendLine("   <name>" + Name + "</name>");
             if (!string.IsNullOrEmpty(TxdName)) sb.AppendLine("   <textureDictionary>" + TxdName + "</textureDictionary>");
             else sb.AppendLine("   <textureDictionary/>");
@@ -628,7 +1009,6 @@ namespace VIDE
     {
         public override string OutItemType { get { return "CMloArchetypeDef"; } }
         public override string OutAssetType { get { return "ASSET_TYPE_ASSETLESS"; } }
-
         public int RoomCount { get; set; }
         public int PortalCount { get; set; }
         public int EntityCountHD { get; set; }
@@ -651,7 +1031,7 @@ namespace VIDE
             //name, flags, roomcount, portalcount, entitycountHD, loddist1, loddist2, loddist3?
             string[] parts = lines[i].Split(',');
             Name = TypeFile.FixHashes(parts[0].Trim().ToLowerInvariant());
-            Flags = int.Parse(parts[1].Trim(), CultureInfo.InvariantCulture);
+            Flags = int.Parse(parts[1].Trim(), CultureInfo.InvariantCulture);;
             RoomCount = int.Parse(parts[2].Trim(), CultureInfo.InvariantCulture);
             PortalCount = int.Parse(parts[3].Trim(), CultureInfo.InvariantCulture);
             EntityCountHD = int.Parse(parts[4].Trim(), CultureInfo.InvariantCulture);
@@ -659,7 +1039,7 @@ namespace VIDE
             LodDist2 = float.Parse(parts[6].Trim(), CultureInfo.InvariantCulture);
             LodDist3 = float.Parse(parts[7].Trim(), CultureInfo.InvariantCulture);
 
-            DrawDistance = (LodDist1 > 0) ? LodDist1 : 100; //this will be output to XML
+            DrawDistance = (LodDist1 > 0) ? LodDist1 : 300; //this will be output to XML
             OutPhysicsDictionary = Name;
 
             bool inmlo = true;
@@ -749,48 +1129,56 @@ namespace VIDE
         {
             return base.ToString();
         }
-
     }
+    
     public class MloEntity
     {
         public string Name { get; set; }
         public float PosX { get; set; }
         public float PosY { get; set; }
         public float PosZ { get; set; }
-        public float RotX { get; set; }
-        public float RotY { get; set; }
-        public float RotZ { get; set; }
-        public float RotW { get; set; }
+        public Quaternion Rotation { get; set; } // Use Quaternion instead of individual components
         public int LodLevel { get; set; }
-        public uint Flags { get; set; }
+        public int Flags { get; set; }
 
         public void Load(string line)
         {
-            //name, posX, posY, posZ, rotX, rotY, rotZ, rotW, lodLevel, flags
+            // name, posX, posY, posZ, rotX, rotY, rotZ, rotW, lodLevel, flags
             string[] parts = line.Split(',');
             Name = TypeFile.FixHashes(parts[0].Trim().ToLowerInvariant());
             PosX = float.Parse(parts[1].Trim(), CultureInfo.InvariantCulture);
             PosY = float.Parse(parts[2].Trim(), CultureInfo.InvariantCulture);
             PosZ = float.Parse(parts[3].Trim(), CultureInfo.InvariantCulture);
-            RotX = float.Parse(parts[4].Trim(), CultureInfo.InvariantCulture);
-            RotY = float.Parse(parts[5].Trim(), CultureInfo.InvariantCulture);
-            RotZ = float.Parse(parts[6].Trim(), CultureInfo.InvariantCulture);
-            RotW = float.Parse(parts[7].Trim(), CultureInfo.InvariantCulture);
+
+            // Create a quaternion from the rotation components
+            float rotX = float.Parse(parts[4].Trim(), CultureInfo.InvariantCulture);
+            float rotY = float.Parse(parts[5].Trim(), CultureInfo.InvariantCulture);
+            float rotZ = float.Parse(parts[6].Trim(), CultureInfo.InvariantCulture);
+            float rotW = float.Parse(parts[7].Trim(), CultureInfo.InvariantCulture);
+
+            Rotation = new Quaternion(rotX, rotY, rotZ, rotW);
+
+            // Invert the quaternion
+            Rotation = Quaternion.Inverse(Rotation);
+
             LodLevel = int.Parse(parts[8].Trim(), CultureInfo.InvariantCulture);
-            Flags = uint.Parse(parts[9].Trim(), CultureInfo.InvariantCulture);
+            Flags = int.Parse(parts[9].Trim(), CultureInfo.InvariantCulture);
         }
 
         public void SaveXML(StringBuilder sb)
         {
             string lodLevel = "LODTYPES_DEPTH_ORPHANHD";
-            if (LodLevel == 1) lodLevel = "LODTYPES_DEPTH_LOD";//not really required, only HD should be output here...
+            if (LodLevel == 1) lodLevel = "LODTYPES_DEPTH_LOD";
             if (LodLevel == 2) lodLevel = "LODTYPES_DEPTH_SLOD1";
 
             sb.AppendLine("     <archetypeName>" + Name + "</archetypeName>");
-            sb.AppendLine("     <flags value=\"1572864\"/>");//18350082 for no reflections
-            sb.AppendLine("     <guid value=\"" + TypeFile.UStr((uint)TypeFile.Rnd.Next()) + "\"/>"); //generate guids..
+            sb.AppendLine("     <flags value=\"1572864\"/>");
+            sb.AppendLine("     <guid value=\"" + TypeFile.UStr((uint)TypeFile.Rnd.Next()) + "\"/>");
             sb.AppendLine("     <position x=\"" + TypeFile.FStr(PosX) + "\" y=\"" + TypeFile.FStr(PosY) + "\" z=\"" + TypeFile.FStr(PosZ) + "\"/>");
-            sb.AppendLine("     <rotation x=\"" + TypeFile.FStr(RotX) + "\" y=\"" + TypeFile.FStr(RotY) + "\" z=\"" + TypeFile.FStr(RotZ) + "\" w=\"" + TypeFile.FStr(RotW) + "\"/>");
+
+            // Save the inverted quaternion
+            sb.AppendLine("     <rotation x=\"" + TypeFile.FStr(Rotation.X) + "\" y=\"" + TypeFile.FStr(Rotation.Y) + "\" z=\"" + TypeFile.FStr(Rotation.Z) + "\" w=\"" + TypeFile.FStr(Rotation.W) + "\"/>");
+
             sb.AppendLine("     <scaleXY value=\"1\"/>");
             sb.AppendLine("     <scaleZ value=\"1\"/>");
             sb.AppendLine("     <parentIndex value=\"-1\"/>");
@@ -803,10 +1191,9 @@ namespace VIDE
             sb.AppendLine("     <ambientOcclusionMultiplier value=\"255\"/>");
             sb.AppendLine("     <artificialAmbientOcclusion value=\"255\"/>");
             sb.AppendLine("     <tintValue value=\"0\"/>");
-
         }
-
     }
+
     public class MloRoom
     {
         public string Name { get; set; }
@@ -819,8 +1206,8 @@ namespace VIDE
         public float MinY { get; set; }
         public float MinZ { get; set; }
         public float Blend { get; set; }
-        public uint TimeCycle { get; set; }
-        public uint Flags { get; set; }
+        public string TimeCycle { get; set; }
+        public int Flags { get; set; }
         public List<int> EntityIDs { get; set; } = new List<int>();
 
         public int Load(string[] lines, int i)
@@ -838,8 +1225,7 @@ namespace VIDE
             MinY = float.Parse(parts[7].Trim(), CultureInfo.InvariantCulture);
             MinZ = float.Parse(parts[8].Trim(), CultureInfo.InvariantCulture);
             Blend = float.Parse(parts[9].Trim(), CultureInfo.InvariantCulture);
-            TimeCycle = uint.Parse(parts[10].Trim(), CultureInfo.InvariantCulture); //0, 2327134064 - hash
-            Flags = uint.Parse(parts[11].Trim(), CultureInfo.InvariantCulture); //0, 96
+            Flags = int.Parse(parts[11].Trim(), CultureInfo.InvariantCulture); //0, 96
 
             bool inroom = true;
             while (inroom && (i < lines.Length))
@@ -877,9 +1263,9 @@ namespace VIDE
             sb.AppendLine("     <bbMin x=\"" + TypeFile.FStr(MinX) + "\" y=\"" + TypeFile.FStr(MinY) + "\" z=\"" + TypeFile.FStr(MinZ) + "\"/>");
             sb.AppendLine("     <bbMax x=\"" + TypeFile.FStr(MaxX) + "\" y=\"" + TypeFile.FStr(MaxY) + "\" z=\"" + TypeFile.FStr(MaxZ) + "\"/>");
             sb.AppendLine("     <blend value=\"1\"/>");
-            sb.AppendLine("     <timecycleName/>");
+            sb.AppendLine("     <timecycleName>int_gasstation</timecycleName>");
             sb.AppendLine("     <secondaryTimecycleName/>");
-            sb.AppendLine("     <flags value=\"96\"/>");
+            sb.AppendLine("     <flags value=\"" + Flags + "\"/>");
             sb.AppendLine("     <portalCount value=\"" + TypeFile.IStr(PortalCount) + "\"/>");
             sb.AppendLine("     <floorId value=\"0\"/>");
             sb.AppendLine("     <exteriorVisibiltyDepth value=\"-1\"/>");
@@ -890,8 +1276,8 @@ namespace VIDE
             }
             sb.AppendLine("     </attachedObjects>");
         }
-
     }
+
     public class MloPortal
     {
         public int RoomFrom { get; set; }
@@ -912,11 +1298,10 @@ namespace VIDE
         public int Entity2 { get; set; }
         public int Entity3 { get; set; }
         public int Entity4 { get; set; }
-        public uint Flags { get; set; }
+        public int Flags { get; set; }
         public uint Times { get; set; }
         public float Unk { get; set; }
-
-        public uint OutFlags { get; set; } = 0;
+        public int OutFlags { get; set; } = 0;
 
         public void Load(string line)
         {
@@ -941,13 +1326,23 @@ namespace VIDE
             Entity2 = int.Parse(parts[15].Trim(), CultureInfo.InvariantCulture);
             Entity3 = int.Parse(parts[16].Trim(), CultureInfo.InvariantCulture);
             Entity4 = int.Parse(parts[17].Trim(), CultureInfo.InvariantCulture);
-            Flags = uint.Parse(parts[18].Trim(), CultureInfo.InvariantCulture);
+            Flags = int.Parse(parts[18].Trim(), CultureInfo.InvariantCulture);
             Times = uint.Parse(parts[19].Trim(), CultureInfo.InvariantCulture);
             Unk = float.Parse(parts[20].Trim(), CultureInfo.InvariantCulture);
 
-            if (Flags == 84)
+            if (Flags == 66)
+            {
+                OutFlags = 2;
+            }
+
+            if (Flags == 68)
             {
                 OutFlags = 1284;
+            }
+
+            if (Flags == 72)
+            {
+                OutFlags = 8;
             }
         }
 
@@ -957,7 +1352,7 @@ namespace VIDE
 
             sb.AppendLine("     <roomFrom value=\"" + TypeFile.IStr(RoomFrom) + "\"/>");
             sb.AppendLine("     <roomTo value=\"" + TypeFile.IStr(RoomTo) + "\"/>");
-            sb.AppendLine("     <flags value=\"" + TypeFile.UStr(OutFlags) + "\"/>"); //64? 8192? 1796? //1284 for mirror
+            sb.AppendLine("     <flags value=\"" + TypeFile.IStr(OutFlags) + "\"/>"); //64? 8192? 1796? //1284 for mirror
             sb.AppendLine("     <mirrorPriority value=\"0\"/>");
             sb.AppendLine("     <opacity value=\"0\"/>");
             sb.AppendLine("     <audioOcclusion value=\"0\"/>");
@@ -993,8 +1388,6 @@ namespace VIDE
         public float PosY { get; set; }
         public float PosZ { get; set; }
         public int Type { get; set; }
-
-
 
         public virtual void Load(string fxstr)
         {
@@ -1042,6 +1435,7 @@ namespace VIDE
             return ObjectID + ": " + Type.ToString();
         }
     }
+
     public class Particle2DFX : Base2DFX
     {
         public float RotationX { get; set; }
@@ -1076,7 +1470,6 @@ namespace VIDE
             ColourG = uint.Parse(FXParts[16].Trim(), CultureInfo.InvariantCulture);
             ColourB = uint.Parse(FXParts[17].Trim(), CultureInfo.InvariantCulture);
 
-
             switch (FXType)
             {
                 case 0: //AMB
@@ -1090,6 +1483,7 @@ namespace VIDE
             }
         }
     }
+
     public class Ladder2DFX : Base2DFX
     {
         public float RotationX { get; set; }
@@ -1106,7 +1500,6 @@ namespace VIDE
         public float DirY { get; set; }
         public float DirZ { get; set; }
         public int Flags { get; set; }
-
 
         public override void Load(string fxstr)
         {
@@ -1128,9 +1521,8 @@ namespace VIDE
             Flags = int.Parse(FXParts[18].Trim(), CultureInfo.InvariantCulture);
 
         }
-
-
     }
+
     public class SpawnPoint2DFX : Base2DFX
     {
         public float RotationX { get; set; }
@@ -1139,8 +1531,8 @@ namespace VIDE
         public float RotationW { get; set; }
         public uint SpawnType { get; set; }
         public uint PedType { get; set; }
-        public uint Flags1 { get; set; }
-        public uint Flags2 { get; set; }
+        public int Flags1 { get; set; }
+        public int Flags2 { get; set; }
 
         public override void Load(string fxstr)
         {
@@ -1152,11 +1544,12 @@ namespace VIDE
             RotationW = float.Parse(FXParts[8].Trim(), CultureInfo.InvariantCulture);
             SpawnType = uint.Parse(FXParts[9].Trim(), CultureInfo.InvariantCulture);
             PedType = uint.Parse(FXParts[10].Trim(), CultureInfo.InvariantCulture);
-            Flags1 = uint.Parse(FXParts[11].Trim(), CultureInfo.InvariantCulture);
-            Flags2 = uint.Parse(FXParts[12].Trim(), CultureInfo.InvariantCulture);
+            Flags1 = int.Parse(FXParts[11].Trim(), CultureInfo.InvariantCulture);
+            Flags2 = int.Parse(FXParts[12].Trim(), CultureInfo.InvariantCulture);
 
         }
     }
+
     public class LightShaft2DFX : Base2DFX
     {
         public float RotationX { get; set; }
@@ -1204,8 +1597,6 @@ namespace VIDE
             Unk1 = float.Parse(FXParts[23].Trim(), CultureInfo.InvariantCulture);
 
         }
-
-
     }
 
     public class BaseExtension
@@ -1231,6 +1622,7 @@ namespace VIDE
             }
             return dict;
         }
+
         public static Dictionary<string, string> BuildStringLookup(string vals)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -1253,11 +1645,11 @@ namespace VIDE
             return dict;
         }
 
-
         public virtual void WriteXML(StringBuilder sb)
         {
         }
     }
+
     public class ParticleExtension : BaseExtension
     {
         public Particle2DFX ParticleFX { get; set; }
@@ -1265,10 +1657,7 @@ namespace VIDE
         public string FXName { get; set; } = "AMB_STEAM_VENT_ROUND";
         public int BoneTag { get; set; } = 0;
         public int Probability { get; set; } = 100;
-        public uint Flags { get; set; } = 0;
-
-
-
+        public int Flags { get; set; } = 0;
         private static Dictionary<string, string> _FXNameLookup;
         public static Dictionary<string, string> FXNameLookup
         {
@@ -1281,130 +1670,130 @@ namespace VIDE
                 return _FXNameLookup;
             }
         }
+
         private static void BuildFXNameLookup()
         {
             string fxnames = @"
-AMB_BUTTERFLIES, AMB_BUTTERFLYS
-AMB_CASTLE_FOUNTAIN_LOW, AMB_FOUNTAIN_MANSION2
-AMB_CASTLE_FOUNTAIN_UP, AMB_FOUNTAIN_MANSION2
-AMB_CIG_SMOKE_ASHTRAY, AMB_CIG_SMOKE_LINGER
-AMB_CIG_SMOKE_CLOUDS, AMB_CIG_SMOKE_LINGER
-AMB_COCKROACHES, AMB_COCKROACHES
-AMB_DRIPS_WATER, AMB_WATER_ROOF_DRIPS
-AMB_DRIPS_WATER_INTERIOR, AMB_WATER_ROOF_DRIPS
-AMB_DRY_ICE, AMB_DRY_ICE_AREA
-AMB_DUST_LIT_WINDOWS, AMB_DUST_MOTES
-AMB_ELECTRICAL_SPARKS, AMB_ELECTRIC_CRACKLE
-AMB_FIRE_GENERIC, AMB_BARREL_FIRE
-AMB_FLIES_CIRCLING, AMB_FLY_SWARM
-AMB_FLIES_ZAPPED, AMB_FLY_ZAPPED
-AMB_FOUNTAIN_CENTRAL, AMB_FOUNTAIN_DOUBLE
-AMB_FOUNTAIN_CITYHALL, AMB_FOUNTAIN_ARCADIUS
-AMB_FOUNTAIN_CORNERS, AMB_FOUNTAIN_RODEO
-AMB_FOUNTAIN_GENERIC, AMB_FOUNTAIN_ARCADIUS
-AMB_FOUNTAIN_POUR, AMB_FOUNTAIN_POUR
-AMB_FOUNTAIN_ROCKEFELLER, AMB_FOUNTAIN_MANSION2
-AMB_FOUNTAIN_SPOUT, AMB_FOUNTAIN_POUR
-AMB_FOUNTAIN_UPPER_TIER, AMB_FOUNTAIN_ARCADIUS
-AMB_HORN_BLAST, AMB_FOUNDRY_FOGBALL
-AMB_HORN_SMOKE, AMB_GENERATOR_SMOKE
-AMB_HOT_TUB, AMB_CLUCK_BATH_STEAM
-AMB_INDUST_GAS_CONSTANT, AMB_SMOKE_GASWORKS
-AMB_INDUST_GAS_INTERMITTENT, AMB_FIRE_GASWORKS
-AMB_INDUST_PLUME_SM, AMB_SMOKE_GEN_FACTORY
-AMB_INDUST_PLUME_LG, AMB_SMOKE_FOUNDRY
-AMB_RAIN_OVERHANGS_5M, AMB_WATER_ROOF_DRIPS
-AMB_RAIN_OVERHANGS_10M, AMB_WATER_ROOF_DRIPS
-AMB_RESPRAY_CAN, AMB_RAPID_AREA_SPRAY
-AMB_STEAM_MANHOLE, AMB_STEAM_VENT_ROUND
-AMB_STEAM_CHIMNEY, AMB_STEAM_VENT_RND_HVY
-AMB_STEAM_COOKING_APPS, AMB_CLUCK_BATH_STEAM
-AMB_STEAM_HOTDOG, AMB_STEAM_VENT_OPEN_LGT
-AMB_STEAM_SLOW, AMB_STEAM_VENT_ROUND
-AMB_STEAM_SMALL_PLUME, AMB_STEAM_VENT_RND_HVY
-AMB_STEAM_STREET_EXHAUST, AMB_STEAM_VENT_ROUND
-AMB_STEAM_VENT_OBLONG, AMB_STEAM_VENT_OPEN_HVY
-AMB_STEAM_WALL_VENT, AMB_STEAM_DIRECTED
-AMB_WATER_PIPE_V1, AMB_WATER_ROOF_DRIPS
-AMB_WATER_PIPE_V2, AMB_WATER_ROOF_DRIPS
-AMB_WIND_ALLEY_LITTER, AMB_WIND_LITTER
-AMB_WIND_ALLEY_LEAVES, AMB_WIND_LEAVES
-AMB_WIND_DOCKS_DUST, AMB_WIND_DUST
-AMB_WIND_LEAVES_AUTUM, AMB_WIND_LEAVES
-AMB_WIND_LEAVES_AUTUMN, AMB_WIND_LEAVES
-AMB_WIND_LEAVES_PALE, AMB_WIND_LEAVES
-AMB_WIND_SAND, AMB_WIND_DUST
-BRK_BIN_STREET, BRK_METAL_FRAG
-BRK_CARDBOARD_BOXES, BRK_BANKNOTES
-BRK_CERAMIC_OBJECTS, BRK_CHAMPAGNE_CASE
-BRK_ELECTRICAL, BRK_SPARKING_WIRES
-BRK_ELECTRICAL_SMALL_FIRE, BRK_SPARKING_WIRES
-BRK_ELECTRICAL_LARGE_FIRE, BRK_SPARKING_WIRES
-BRK_LAUNDRY_BASKET, BRK_COINS
-BRK_METAL_OBJECTS, BRK_METAL_FRAG
-BRK_SPARKING_WIRES, BRK_SPARKING_WIRES
-BRK_SPARKS, BRK_SPARKING_WIRES
-BRK_STONE_OBJECTS, BRK_STONE
-BRK_WATER_BARRELS, BRK_BLOOD
-BRK_WOOD_CHUNKS, BRK_WOOD_SPLINTER
-BRK_WOOD_OBJECTS, BRK_WOOD_SPLINTER
-BRK_WOOD_PLANKS, BRK_WOOD_PLANKS
-COL_ELECTRICAL, COL_ELECTRICAL
-COL_FRUITPILE_MIX, COL_ORANGES
-COL_LEAVES_PALE, COL_LEAVES
-COL_LEAVES_AUTUMN, COL_PALM_LEAVES
-COL_MAIL_BUNDLE, COL_ORANGES
-COL_NAPKINS, COL_ELECTRICAL
-DST_BIN_DUMPSTERS, DST_RUBBISH
-DST_BIN_HOUSEHOLD, DST_RUBBISH
-DST_BIN_STREET, DST_RUBBISH
-DST_CARDBOARD_BOXES, DST_GEN_CARDBOARD
-DST_CERAMIC, DST_CERAMICS
-DST_CERAMIC_PLATE, DST_CERAMICS
-DST_CHIPS, DST_CRISP_BAGS
-DST_COIN_PILE, DST_GEN_GOBSTOP
-DST_DINO_BONES, DST_ROCKS
-DST_ELECTRICAL, DST_ELECTRICAL
-DST_FLOWER_PETALS, DST_PLANT_LEAVES
-DST_FOOD_DEBRIS, DST_BOX_NOODLE
-DST_FRUITPILE_MIX, DST_PINEAPPLE
-DST_GLASS_PANES, DST_GLASS_BOTTLES
-DST_GLASS_CLEAR_EMPTY, DST_GLASS_BOTTLES
-DST_GLASS_CLEAR_LAGER, DST_SHOP_GLASS_BOTTLES
-DST_JUICE_CUPS, DST_GEN_LIQUID_BURST
-DST_LIGHTBULB_ON, DST_GLASS_BULB
-DST_LIGHTBULB_OFF, DST_GLASS_BULB
-DST_MAIL_BUNDLE, DST_MAIL
-DST_METAL_OBJECTS, DST_METAL_FRAG
-DST_NAPKIN_PIECES, DST_RUBBISH
-DST_NEWSPAPER_BUNDLE, DST_NEWSPAPER
-DST_PAINT_POT, DST_PAINT_CANS
-DST_PLASTIC, DST_GEN_PLASTIC_CONT
-DST_PLASTIC_CLEAR_WATER, DST_GEN_LIQUID_BURST
-DST_SAUCE_BOTTLE, DST_GEN_FOOD
-DST_SODAPILE_ECOLA, DST_GEN_LIQUID_BURST
-DST_SODAPILE_MIX, DST_GEN_LIQUID_BURST
-DST_SODAPILE_SPRUNK, DST_GEN_LIQUID_BURST
-DST_SPARKING_WIRES, DST_SPARKING_WIRES
-DST_STONE_OBJECTS, DST_ROCKS
-DST_STONE_PILLARS, DST_CONCRETE
-DST_SWEETIES, DST_SWEET_BOXES
-DST_WOODEN_CRATE, DST_WOOD_STRUCTURES
-DST_WOODEN_OBJECTS, DST_WOOD_SPLINTER
-SHT_ELECTRICAL, SHT_ELECTRICAL_BOX
-SHT_GASPIPE, SHT_FIRE_EXTINGUISHER
-SHT_GAS_PIPE_FLAME, SHT_FLAME
-SHT_OIL_BARREL_GLUG, SHT_BEER_BARREL
-SHT_POINT_00, SHT_OIL
-SHT_STEAM_PIPE, SHT_STEAM
-SHT_WATER_BARREL_GLUG, SHT_BEER_BARREL
-SHT_WATER_PIPE, SHT_WATER
-exp_molotov, DST_FOAM_EXTINGUISHER
-";
+            AMB_BUTTERFLIES, AMB_BUTTERFLYS
+            AMB_CASTLE_FOUNTAIN_LOW, AMB_FOUNTAIN_MANSION2
+            AMB_CASTLE_FOUNTAIN_UP, AMB_FOUNTAIN_MANSION2
+            AMB_CIG_SMOKE_ASHTRAY, AMB_CIG_SMOKE_LINGER
+            AMB_CIG_SMOKE_CLOUDS, AMB_CIG_SMOKE_LINGER
+            AMB_COCKROACHES, AMB_COCKROACHES
+            AMB_DRIPS_WATER, AMB_WATER_ROOF_DRIPS
+            AMB_DRIPS_WATER_INTERIOR, AMB_WATER_ROOF_DRIPS
+            AMB_DRY_ICE, AMB_DRY_ICE_AREA
+            AMB_DUST_LIT_WINDOWS, AMB_DUST_MOTES
+            AMB_ELECTRICAL_SPARKS, AMB_ELECTRIC_CRACKLE
+            AMB_FIRE_GENERIC, AMB_BARREL_FIRE
+            AMB_FLIES_CIRCLING, AMB_FLY_SWARM
+            AMB_FLIES_ZAPPED, AMB_FLY_ZAPPED
+            AMB_FOUNTAIN_CENTRAL, AMB_FOUNTAIN_DOUBLE
+            AMB_FOUNTAIN_CITYHALL, AMB_FOUNTAIN_ARCADIUS
+            AMB_FOUNTAIN_CORNERS, AMB_FOUNTAIN_RODEO
+            AMB_FOUNTAIN_GENERIC, AMB_FOUNTAIN_ARCADIUS
+            AMB_FOUNTAIN_POUR, AMB_FOUNTAIN_POUR
+            AMB_FOUNTAIN_ROCKEFELLER, AMB_FOUNTAIN_MANSION2
+            AMB_FOUNTAIN_SPOUT, AMB_FOUNTAIN_POUR
+            AMB_FOUNTAIN_UPPER_TIER, AMB_FOUNTAIN_ARCADIUS
+            AMB_HORN_BLAST, AMB_FOUNDRY_FOGBALL
+            AMB_HORN_SMOKE, AMB_GENERATOR_SMOKE
+            AMB_HOT_TUB, AMB_CLUCK_BATH_STEAM
+            AMB_INDUST_GAS_CONSTANT, AMB_SMOKE_GASWORKS
+            AMB_INDUST_GAS_INTERMITTENT, AMB_FIRE_GASWORKS
+            AMB_INDUST_PLUME_SM, AMB_SMOKE_GEN_FACTORY
+            AMB_INDUST_PLUME_LG, AMB_SMOKE_FOUNDRY
+            AMB_RAIN_OVERHANGS_5M, AMB_WATER_ROOF_DRIPS
+            AMB_RAIN_OVERHANGS_10M, AMB_WATER_ROOF_DRIPS
+            AMB_RESPRAY_CAN, AMB_RAPID_AREA_SPRAY
+            AMB_STEAM_MANHOLE, AMB_STEAM_VENT_ROUND
+            AMB_STEAM_CHIMNEY, AMB_STEAM_VENT_RND_HVY
+            AMB_STEAM_COOKING_APPS, AMB_CLUCK_BATH_STEAM
+            AMB_STEAM_HOTDOG, AMB_STEAM_VENT_OPEN_LGT
+            AMB_STEAM_SLOW, AMB_STEAM_VENT_ROUND
+            AMB_STEAM_SMALL_PLUME, AMB_STEAM_VENT_RND_HVY
+            AMB_STEAM_STREET_EXHAUST, AMB_STEAM_VENT_ROUND
+            AMB_STEAM_VENT_OBLONG, AMB_STEAM_VENT_OPEN_HVY
+            AMB_STEAM_WALL_VENT, AMB_STEAM_VENT_ROUND
+            AMB_WATER_PIPE_V1, AMB_WATER_ROOF_DRIPS
+            AMB_WATER_PIPE_V2, AMB_WATER_ROOF_DRIPS
+            AMB_WIND_ALLEY_LITTER, AMB_WIND_LITTER
+            AMB_WIND_ALLEY_LEAVES, AMB_WIND_LEAVES
+            AMB_WIND_DOCKS_DUST, AMB_WIND_DUST
+            AMB_WIND_LEAVES_AUTUM, AMB_WIND_LEAVES
+            AMB_WIND_LEAVES_AUTUMN, AMB_WIND_LEAVES
+            AMB_WIND_LEAVES_PALE, AMB_WIND_LEAVES
+            AMB_WIND_SAND, AMB_WIND_DUST
+            BRK_BIN_STREET, BRK_METAL_FRAG
+            BRK_CARDBOARD_BOXES, BRK_BANKNOTES
+            BRK_CERAMIC_OBJECTS, BRK_CHAMPAGNE_CASE
+            BRK_ELECTRICAL, BRK_SPARKING_WIRES
+            BRK_ELECTRICAL_SMALL_FIRE, BRK_SPARKING_WIRES
+            BRK_ELECTRICAL_LARGE_FIRE, BRK_SPARKING_WIRES
+            BRK_LAUNDRY_BASKET, BRK_COINS
+            BRK_METAL_OBJECTS, BRK_METAL_FRAG
+            BRK_SPARKING_WIRES, BRK_SPARKING_WIRES
+            BRK_SPARKS, BRK_SPARKING_WIRES
+            BRK_STONE_OBJECTS, BRK_STONE
+            BRK_WATER_BARRELS, BRK_BLOOD
+            BRK_WOOD_CHUNKS, BRK_WOOD_SPLINTER
+            BRK_WOOD_OBJECTS, BRK_WOOD_SPLINTER
+            BRK_WOOD_PLANKS, BRK_WOOD_PLANKS
+            COL_ELECTRICAL, COL_ELECTRICAL
+            COL_FRUITPILE_MIX, COL_ORANGES
+            COL_LEAVES_PALE, COL_LEAVES
+            COL_LEAVES_AUTUMN, COL_PALM_LEAVES
+            COL_MAIL_BUNDLE, COL_ORANGES
+            COL_NAPKINS, COL_ELECTRICAL
+            DST_BIN_DUMPSTERS, DST_RUBBISH
+            DST_BIN_HOUSEHOLD, DST_RUBBISH
+            DST_BIN_STREET, DST_RUBBISH
+            DST_CARDBOARD_BOXES, DST_GEN_CARDBOARD
+            DST_CERAMIC, DST_CERAMICS
+            DST_CERAMIC_PLATE, DST_CERAMICS
+            DST_CHIPS, DST_CRISP_BAGS
+            DST_COIN_PILE, DST_GEN_GOBSTOP
+            DST_DINO_BONES, DST_ROCKS
+            DST_ELECTRICAL, DST_ELECTRICAL
+            DST_FLOWER_PETALS, DST_PLANT_LEAVES
+            DST_FOOD_DEBRIS, DST_BOX_NOODLE
+            DST_FRUITPILE_MIX, DST_PINEAPPLE
+            DST_GLASS_PANES, DST_GLASS_BOTTLES
+            DST_GLASS_CLEAR_EMPTY, DST_GLASS_BOTTLES
+            DST_GLASS_CLEAR_LAGER, DST_SHOP_GLASS_BOTTLES
+            DST_JUICE_CUPS, DST_GEN_LIQUID_BURST
+            DST_LIGHTBULB_ON, DST_GLASS_BULB
+            DST_LIGHTBULB_OFF, DST_GLASS_BULB
+            DST_MAIL_BUNDLE, DST_MAIL
+            DST_METAL_OBJECTS, DST_METAL_FRAG
+            DST_NAPKIN_PIECES, DST_RUBBISH
+            DST_NEWSPAPER_BUNDLE, DST_NEWSPAPER
+            DST_PAINT_POT, DST_PAINT_CANS
+            DST_PLASTIC, DST_GEN_PLASTIC_CONT
+            DST_PLASTIC_CLEAR_WATER, DST_GEN_LIQUID_BURST
+            DST_SAUCE_BOTTLE, DST_GEN_FOOD
+            DST_SODAPILE_ECOLA, DST_GEN_LIQUID_BURST
+            DST_SODAPILE_MIX, DST_GEN_LIQUID_BURST
+            DST_SODAPILE_SPRUNK, DST_GEN_LIQUID_BURST
+            DST_SPARKING_WIRES, DST_SPARKING_WIRES
+            DST_STONE_OBJECTS, DST_ROCKS
+            DST_STONE_PILLARS, DST_CONCRETE
+            DST_SWEETIES, DST_SWEET_BOXES
+            DST_WOODEN_CRATE, DST_WOOD_STRUCTURES
+            DST_WOODEN_OBJECTS, DST_WOOD_SPLINTER
+            SHT_ELECTRICAL, SHT_ELECTRICAL_BOX
+            SHT_GASPIPE, SHT_FIRE_EXTINGUISHER
+            SHT_GAS_PIPE_FLAME, SHT_FLAME
+            SHT_OIL_BARREL_GLUG, SHT_BEER_BARREL
+            SHT_POINT_00, SHT_OIL
+            SHT_STEAM_PIPE, SHT_STEAM
+            SHT_WATER_BARREL_GLUG, SHT_BEER_BARREL
+            SHT_WATER_PIPE, SHT_WATER
+            exp_molotov, DST_FOAM_EXTINGUISHER
+            ";
+
             _FXNameLookup = BuildStringLookup(fxnames);
         }
-
-
 
         public ParticleExtension(Particle2DFX particlefx)
         {
@@ -1422,6 +1811,7 @@ exp_molotov, DST_FOAM_EXTINGUISHER
             }
 
         }
+
         public override void WriteXML(StringBuilder sb)
         {
             float posX = ParticleFX.PosX;
@@ -1450,8 +1840,8 @@ exp_molotov, DST_FOAM_EXTINGUISHER
             sb.AppendLine("    </Item>");
 
         }
-
     }
+
     public class LadderExtension : BaseExtension
     {
         public Ladder2DFX LadderFX { get; set; }
@@ -1460,6 +1850,7 @@ exp_molotov, DST_FOAM_EXTINGUISHER
         {
             LadderFX = ladderfx;
         }
+
         public override void WriteXML(StringBuilder sb)
         {
             bool flip = LadderFX.EndZ < LadderFX.StartZ;
@@ -1490,6 +1881,7 @@ exp_molotov, DST_FOAM_EXTINGUISHER
 
         }
     }
+
     public class SpawnPointExtension : BaseExtension
     {
         public SpawnPoint2DFX SpawnPointFX { get; set; }
@@ -1510,91 +1902,93 @@ exp_molotov, DST_FOAM_EXTINGUISHER
                 return _SpawnTypeLookup;
             }
         }
+
         private static void BuildSpawnTypeLookup()
         {
             string spawntypes = @"
-Seat_Bench, PROP_HUMAN_SEAT_BENCH
-Seat_StdChair, PROP_HUMAN_SEAT_CHAIR
-Seat_StdCouch, PROP_HUMAN_SEAT_ARMCHAIR
-Seat_CafeChair, PROP_HUMAN_SEAT_CHAIR_FOOD
-Seat_RestaurantChair, PROP_HUMAN_SEAT_CHAIR_FOOD
-Seat_BarChair, PROP_HUMAN_SEAT_CHAIR_DRINK_BEER
-Seat_StripClubChair, PROP_HUMAN_SEAT_STRIP_WATCH
-Seat_StripClubStool, PROP_HUMAN_SEAT_CHAIR_UPRIGHT
-Seat_BoardGamePlayer, PROP_HUMAN_SEAT_CHAIR_MP_PLAYER
-Seat_OnCar, PROP_HUMAN_SEAT_DECKCHAIR
-Seat_Crate, PROP_HUMAN_SEAT_CHAIR
-Seat_InternetCafe, PROP_HUMAN_SEAT_COMPUTER
-Seat_OnSteps, WORLD_HUMAN_SEAT_STEPS
-Seat_OnStepsB, WORLD_HUMAN_SEAT_STEPS
-Seat_OnWall, WORLD_HUMAN_SEAT_LEDGE
-Seat_OnStepsHangOut, WORLD_HUMAN_SEAT_STEPS
-Seat_OnWallHangOut, WORLD_HUMAN_SEAT_LEDGE
-Seat_HospitalWaiting, PROP_HUMAN_SEAT_BUS_STOP_WAIT
-Seat_SlouchedDruggie, WORLD_HUMAN_BUM_SLUMPED
-HangOut_Street, WORLD_HUMAN_HANG_OUT_STREET
-HangOut_AlleyWay, WORLD_HUMAN_DRUG_DEALER_HARD
-HangOut_OutsideLiquorStore, WORLD_HUMAN_HANG_OUT_STREET
-HangOut_BaseballDiamonds, WORLD_HUMAN_CHEERING
-HangOut_BoardGameWatcher, WORLD_HUMAN_PARTYING
-HangOut_ProjectCourtyard, WORLD_HUMAN_CHEERING
-HangOut_BasketballCourt, WORLD_HUMAN_CHEERING
-HangOut_OutsideMassageParlours, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
-HangOut_ClubHouse, WORLD_HUMAN_PARTYING
-HangOut_WatchBoardGame, WORLD_HUMAN_CHEERING
-Scenario_SecurityGuard, WORLD_HUMAN_GUARD_STAND
-Scenario_TouristPhoto, WORLD_HUMAN_TOURIST_MOBILE
-Scenario_Leaning, WORLD_HUMAN_LEANING
-Scenario_SellingDrugs, WORLD_HUMAN_DRUG_DEALER
-Scenario_RoadWorkers, WORLD_HUMAN_CONST_DRILL
-Scenario_RoadWorkerWithSign, WORLD_HUMAN_HANG_OUT_STREET
-Scenario_DiggingRoadWorkers, WORLD_HUMAN_CONST_DRILL
-Scenario_DrillingRoadWorkers, WORLD_HUMAN_CONST_DRILL
-Scenario_IndustrialWorkers, WORLD_HUMAN_HANG_OUT_STREET
-Scenario_BuildingWorkers, WORLD_HUMAN_HANG_OUT_STREET
-Scenario_DiggingBuildingWorkers, WORLD_HUMAN_CONST_DRILL
-Scenario_DrillingBuildingWorkers, WORLD_HUMAN_CONST_DRILL
-Scenario_HeavilyArmedPolice, WORLD_HUMAN_COP_IDLES
-Scenario_SmokingOutsideOffice, WORLD_HUMAN_SMOKING
-Scenario_PayPhone, WORLD_HUMAN_STAND_MOBILE
-Scenario_DancingNightclub, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
-Scenario_HospitalNurse, WORLD_HUMAN_CLIPBOARD
-Scenario_HospitalDoctor, WORLD_HUMAN_CLIPBOARD
-Scenario_AirWorkers, WORLD_HUMAN_HANG_OUT_STREET
-Scenario_Homeless, WORLD_HUMAN_BUM_FREEWAY
-Scenario_Brazier, WORLD_HUMAN_STAND_IMPATIENT
-Scenario_Gardening, WORLD_HUMAN_GARDENER_PLANT
-Scenario_ParkGardeners, WORLD_HUMAN_GARDENER_PLANT
-Scenario_Sweeper, WORLD_HUMAN_GARDENER_LEAF_BLOWER
-Scenario_NewspaperStand, WORLD_HUMAN_STAND_MOBILE
-Scenario_StationedCop, WORLD_HUMAN_COP_IDLES
-Scenario_PostMan, WORLD_HUMAN_STAND_FIRE
-Scenario_UpTelegraphPoles, WORLD_HUMAN_STAND_FIRE
-Scenario_ServiceWorker, WORLD_HUMAN_STAND_FIRE
-Scenario_Binoculars, WORLD_HUMAN_BINOCULARS
-Scenario_StreetPerformer, WORLD_HUMAN_HUMAN_STATUE
-Scenario_Prostitute, WORLD_HUMAN_PROSTITUTE_LOW_CLASS
-Scenario_StationarySweeper, WORLD_HUMAN_JANITOR
-Scenario_WindowCleaner, WORLD_HUMAN_JANITOR
-Scenario_LeaningForwards, WORLD_HUMAN_LEANING
-Scenario_WatchingPoleDancer, WORLD_HUMAN_STRIP_WATCH_STAND
-Scenario_Bouncer, WORLD_HUMAN_GUARD_STAND
-Scenario_WaitingForTaxi, WORLD_HUMAN_STAND_IMPATIENT
-Scenario_Preacher, WORLD_HUMAN_MUSICIAN
-Scenario_Standing, Standing
-Scenario_LayingDruggie, WORLD_HUMAN_BUM_SLUMPED
-Scenario_HospitalBed, PROP_HUMAN_SEAT_SUNLOUNGER
-Scenario_InvestigatingCop, WORLD_HUMAN_SECURITY_SHINE_TORCH
-Scenario_TaiChi, WORLD_HUMAN_YOGA
-Scenario_JoggerSpawn, WORLD_HUMAN_JOG
-Scenario_StripperDancing, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
-Scenario_StripperLapdance, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
-Scenario_DrinkingAtBar, WORLD_HUMAN_PARTYING
-Scenario_PoliceSniper, WORLD_HUMAN_PROSTITUTE_LOW_CLASS
-Scenario_PoliceSpotter, WORLD_HUMAN_PROSTITUTE_LOW_CLASS
-Location_DropOffPoint, WORLD_HUMAN_STAND_IMPATIENT
-Location_ShopBrowsing, WORLD_HUMAN_WINDOW_SHOP_BROWSE
-";
+            Seat_Bench, PROP_HUMAN_SEAT_BENCH
+            Seat_StdChair, PROP_HUMAN_SEAT_CHAIR
+            Seat_StdCouch, PROP_HUMAN_SEAT_ARMCHAIR
+            Seat_CafeChair, PROP_HUMAN_SEAT_CHAIR_FOOD
+            Seat_RestaurantChair, PROP_HUMAN_SEAT_CHAIR_FOOD
+            Seat_BarChair, PROP_HUMAN_SEAT_CHAIR_DRINK_BEER
+            Seat_StripClubChair, PROP_HUMAN_SEAT_STRIP_WATCH
+            Seat_StripClubStool, PROP_HUMAN_SEAT_CHAIR_UPRIGHT
+            Seat_BoardGamePlayer, PROP_HUMAN_SEAT_CHAIR_MP_PLAYER
+            Seat_OnCar, PROP_HUMAN_SEAT_DECKCHAIR
+            Seat_Crate, PROP_HUMAN_SEAT_CHAIR
+            Seat_InternetCafe, PROP_HUMAN_SEAT_COMPUTER
+            Seat_OnSteps, WORLD_HUMAN_SEAT_STEPS
+            Seat_OnStepsB, WORLD_HUMAN_SEAT_STEPS
+            Seat_OnWall, WORLD_HUMAN_SEAT_LEDGE
+            Seat_OnStepsHangOut, WORLD_HUMAN_SEAT_STEPS
+            Seat_OnWallHangOut, WORLD_HUMAN_SEAT_LEDGE
+            Seat_HospitalWaiting, PROP_HUMAN_SEAT_BUS_STOP_WAIT
+            Seat_SlouchedDruggie, WORLD_HUMAN_BUM_SLUMPED
+            HangOut_Street, WORLD_HUMAN_HANG_OUT_STREET
+            HangOut_AlleyWay, WORLD_HUMAN_DRUG_DEALER_HARD
+            HangOut_OutsideLiquorStore, WORLD_HUMAN_HANG_OUT_STREET
+            HangOut_BaseballDiamonds, WORLD_HUMAN_CHEERING
+            HangOut_BoardGameWatcher, WORLD_HUMAN_PARTYING
+            HangOut_ProjectCourtyard, WORLD_HUMAN_CHEERING
+            HangOut_BasketballCourt, WORLD_HUMAN_CHEERING
+            HangOut_OutsideMassageParlours, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
+            HangOut_ClubHouse, WORLD_HUMAN_PARTYING
+            HangOut_WatchBoardGame, WORLD_HUMAN_CHEERING
+            Scenario_SecurityGuard, WORLD_HUMAN_GUARD_STAND
+            Scenario_TouristPhoto, WORLD_HUMAN_TOURIST_MOBILE
+            Scenario_Leaning, WORLD_HUMAN_LEANING
+            Scenario_SellingDrugs, WORLD_HUMAN_DRUG_DEALER
+            Scenario_RoadWorkers, WORLD_HUMAN_CONST_DRILL
+            Scenario_RoadWorkerWithSign, WORLD_HUMAN_HANG_OUT_STREET
+            Scenario_DiggingRoadWorkers, WORLD_HUMAN_CONST_DRILL
+            Scenario_DrillingRoadWorkers, WORLD_HUMAN_CONST_DRILL
+            Scenario_IndustrialWorkers, WORLD_HUMAN_HANG_OUT_STREET
+            Scenario_BuildingWorkers, WORLD_HUMAN_HANG_OUT_STREET
+            Scenario_DiggingBuildingWorkers, WORLD_HUMAN_CONST_DRILL
+            Scenario_DrillingBuildingWorkers, WORLD_HUMAN_CONST_DRILL
+            Scenario_HeavilyArmedPolice, WORLD_HUMAN_COP_IDLES
+            Scenario_SmokingOutsideOffice, WORLD_HUMAN_SMOKING
+            Scenario_PayPhone, WORLD_HUMAN_STAND_MOBILE
+            Scenario_DancingNightclub, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
+            Scenario_HospitalNurse, WORLD_HUMAN_CLIPBOARD
+            Scenario_HospitalDoctor, WORLD_HUMAN_CLIPBOARD
+            Scenario_AirWorkers, WORLD_HUMAN_HANG_OUT_STREET
+            Scenario_Homeless, WORLD_HUMAN_BUM_FREEWAY
+            Scenario_Brazier, WORLD_HUMAN_STAND_IMPATIENT
+            Scenario_Gardening, WORLD_HUMAN_GARDENER_PLANT
+            Scenario_ParkGardeners, WORLD_HUMAN_GARDENER_PLANT
+            Scenario_Sweeper, WORLD_HUMAN_GARDENER_LEAF_BLOWER
+            Scenario_NewspaperStand, WORLD_HUMAN_STAND_MOBILE
+            Scenario_StationedCop, WORLD_HUMAN_COP_IDLES
+            Scenario_PostMan, WORLD_HUMAN_STAND_FIRE
+            Scenario_UpTelegraphPoles, WORLD_HUMAN_STAND_FIRE
+            Scenario_ServiceWorker, WORLD_HUMAN_STAND_FIRE
+            Scenario_Binoculars, WORLD_HUMAN_BINOCULARS
+            Scenario_StreetPerformer, WORLD_HUMAN_HUMAN_STATUE
+            Scenario_Prostitute, WORLD_HUMAN_PROSTITUTE_LOW_CLASS
+            Scenario_StationarySweeper, WORLD_HUMAN_JANITOR
+            Scenario_WindowCleaner, WORLD_HUMAN_JANITOR
+            Scenario_LeaningForwards, WORLD_HUMAN_LEANING
+            Scenario_WatchingPoleDancer, WORLD_HUMAN_STRIP_WATCH_STAND
+            Scenario_Bouncer, WORLD_HUMAN_GUARD_STAND
+            Scenario_WaitingForTaxi, WORLD_HUMAN_STAND_IMPATIENT
+            Scenario_Preacher, WORLD_HUMAN_MUSICIAN
+            Scenario_Standing, Standing
+            Scenario_LayingDruggie, WORLD_HUMAN_BUM_SLUMPED
+            Scenario_HospitalBed, PROP_HUMAN_SEAT_SUNLOUNGER
+            Scenario_InvestigatingCop, WORLD_HUMAN_SECURITY_SHINE_TORCH
+            Scenario_TaiChi, WORLD_HUMAN_YOGA
+            Scenario_JoggerSpawn, WORLD_HUMAN_JOG
+            Scenario_StripperDancing, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
+            Scenario_StripperLapdance, WORLD_HUMAN_PROSTITUTE_HIGH_CLASS
+            Scenario_DrinkingAtBar, WORLD_HUMAN_PARTYING
+            Scenario_PoliceSniper, WORLD_HUMAN_PROSTITUTE_LOW_CLASS
+            Scenario_PoliceSpotter, WORLD_HUMAN_PROSTITUTE_LOW_CLASS
+            Location_DropOffPoint, WORLD_HUMAN_STAND_IMPATIENT
+            Location_ShopBrowsing, WORLD_HUMAN_WINDOW_SHOP_BROWSE
+            ";
+
             _SpawnTypeLookup = BuildHashLookup(spawntypes);
         }
 
@@ -1610,16 +2004,15 @@ Location_ShopBrowsing, WORLD_HUMAN_WINDOW_SHOP_BROWSE
                 return _PedTypeLookup;
             }
         }
+
         private static void BuildPedTypeLookup()
         {
             string pedtypes = @"
-ANY, Any
-";
+            ANY, Any
+            ";
+
             _PedTypeLookup = BuildHashLookup(pedtypes);
         }
-
-
-
 
         public SpawnPointExtension(SpawnPoint2DFX spawnpointfx)
         {
@@ -1646,9 +2039,8 @@ ANY, Any
             {
                 Form1.WarningsList.Add("Couldn't find PedType " + SpawnPointFX.PedType.ToString() + " for " + SpawnPointFX.ObjectID + ", using default " + PedType + ".");
             }
-
-
         }
+
         public override void WriteXML(StringBuilder sb)
         {
             float posX = SpawnPointFX.PosX;
@@ -1681,6 +2073,7 @@ ANY, Any
             sb.AppendLine("    </Item>");
         }
     }
+
     public class LightShaftExtension : BaseExtension
     {
         public LightShaft2DFX LightShaftFX { get; set; }
@@ -1690,7 +2083,7 @@ ANY, Any
         public float DirZ { get; set; } = -1.0f;
         public uint Color { get; set; } = 0xFFFFFFFF;
         public float Intensity { get; set; } = 0.5f;
-        public uint Flags { get; set; } = 51;
+        public int Flags { get; set; } = 51;
         public string DensityType { get; set; } = "LIGHTSHAFT_DENSITYTYPE_QUADRATIC_GRADIENT";
         public string VolumeType { get; set; } = "LIGHTSHAFT_VOLUMETYPE_SHAFT";
         public float Softness { get; set; } = 0.95f;
@@ -1709,6 +2102,7 @@ ANY, Any
             //TODO: DirX,DirY,DirZ, Color, Intensity, Flags, DensityType, VolumeType, Softness, ScaleBySunIntensity......
 
         }
+
         public override void WriteXML(StringBuilder sb)
         {
             float posX = LightShaftFX.PosX;
@@ -1742,10 +2136,7 @@ ANY, Any
             sb.AppendLine("    </Item>");
 
         }
-
     }
-
-
 
     public class TextureDependency
     {
@@ -1766,5 +2157,4 @@ ANY, Any
             return Parent + ": " + Child;
         }
     }
-
 }
